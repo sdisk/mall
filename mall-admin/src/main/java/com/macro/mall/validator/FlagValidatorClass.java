@@ -14,6 +14,7 @@ public class FlagValidatorClass implements ConstraintValidator<FlagValidator,Int
         this.values = flagValidator.value();
     }
 
+    //Override isValid() 自定义的验证方法
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
         boolean isValid = false;

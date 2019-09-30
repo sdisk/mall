@@ -26,6 +26,7 @@ public class BindingResultAspect {
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
+            //处理BindingResult的异常
             if (arg instanceof BindingResult) {
                 BindingResult result = (BindingResult) arg;
                 if (result.hasErrors()) {

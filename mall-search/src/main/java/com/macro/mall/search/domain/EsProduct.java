@@ -12,12 +12,41 @@ import java.util.List;
 /**
  * 搜索中的商品信息
  * Created by macro on 2018/6/19.
+ *
+ * Document: 标示映射到Elasticsearch文档上的领域对象
+ * indexName: 索引库名次，mysql中数据库的概念
+ * type: 文档类型，mysql中表的概念
+ * shards: 默认分片数
+ * replicas: 默认副本数量
+ *
  */
 @Document(indexName = "pms", type = "product",shards = 1,replicas = 0)
 public class EsProduct implements Serializable {
     private static final long serialVersionUID = -1L;
+
+    /**
+     *  @Id: 表示是文档的id，文档可以认为是mysql中表行的概念
+     */
     @Id
     private Long id;
+
+    /**
+     * @Field:
+     *
+     *    //文档中字段的类型
+     *     FieldType type() default FieldType.Auto;
+     *   //是否建立倒排索引
+     *     boolean index() default true;
+     *   //是否进行存储
+     *     boolean store() default false;
+     *   //分词器名次
+     *     String analyzer() default "";
+     *
+     *  Text: 会进行分词并建了索引的字符类型
+     *  Auto: 自动判断字段类型
+     *  Nested: 嵌套对象类型
+     *  Keyword: 不会进行分词建立索引的类型
+     */
     @Field(type = FieldType.Keyword)
     private String productSn;
     private Long brandId;
@@ -27,6 +56,10 @@ public class EsProduct implements Serializable {
     @Field(type = FieldType.Keyword)
     private String productCategoryName;
     private String pic;
+    /**
+     * ik_max_word: 会将文本做最细粒度的拆分，例如「中华人民共和国国歌」会被拆分为「中华人民共和国、中华人民、中华、华人、人民共和国、人民、人、民、共和国、共和、和、国国、国歌」，会穷尽各种可能的组合；
+     * ik_smart: 会将文本做最粗粒度的拆分，例如「中华人民共和国国歌」会被拆分为「中华人民共和国、国歌」
+     */
     @Field(analyzer = "ik_max_word",type = FieldType.Text)
     private String name;
     @Field(analyzer = "ik_max_word",type = FieldType.Text)

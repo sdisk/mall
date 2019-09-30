@@ -3,6 +3,7 @@ package com.macro.mall.search.repository;
 import com.macro.mall.search.domain.EsProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
@@ -21,4 +22,7 @@ public interface EsProductRepository extends ElasticsearchRepository<EsProduct, 
      */
     Page<EsProduct> findByNameOrSubTitleOrKeywords(String name, String subTitle, String keywords,Pageable page);
 
+//    DSL语句查询
+//    @Query("{"bool":{"must":{"field":{"name":"?0"}}}}")
+//    Page<EsProduct> findByName(String name);
 }

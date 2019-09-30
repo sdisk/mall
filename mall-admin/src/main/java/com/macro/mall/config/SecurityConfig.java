@@ -37,7 +37,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled=true) //添加annotation 支持,包括（prePostEnabled，securedEnabled...）
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UmsAdminService adminService;
@@ -68,7 +68,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/admin/login", "/admin/register")// 对登录注册要允许匿名访问
                 .permitAll()
-                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
+                /**
+                 * 浏览器会首先使用 OPTIONS 方法发起一个预请求，
+                 * 判断接口是否能够正常通讯，如果不能就不会发送真正的请求过来，
+                 * 如果测试通讯正常，则开始真正的请求
+                 */
+                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求,每次请求相当于两次，第一次发送options请求
                 .permitAll()
 //                .antMatchers("/**")//测试时全部运行访问
 //                .permitAll()

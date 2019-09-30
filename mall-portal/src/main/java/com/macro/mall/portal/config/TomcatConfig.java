@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 /**
  * tomcat相关配置
  * Created by macro on 2018/8/7.
+ * 使用定制tomcat作为内置容器
  */
 @Profile("dev")
 @Configuration
